@@ -53,7 +53,7 @@ Run [uninstall.bat](uninstall.bat). It restores the backed-up original English d
 
 ## Installation Issues / Other Versions: One-Prompt AI Adaptation
 
-If manual installation fails because of a different game layout, a non-Steam release, or a game update, an AI coding tool can adapt the package for you. Tools such as **Kimi Code**, WorkBuddy, ZCode, Cursor, and Claude Code can inspect the files and perform the adaptation.
+If manual installation fails because of a different game layout, a non-Steam release, or a game update, an AI coding tool can adapt the package for you. Tools such as **Kimi Code**, **Codex**, WorkBuddy, ZCode, Cursor, and Claude Code can inspect the files and perform the adaptation.
 
 Copy the entire prompt below, replacing the paths and language code with your own:
 
@@ -84,6 +84,7 @@ Please adapt the World Languages package at C:\Users\<username>\Downloads\Bloodb
 ```text
 BB2WorldLang/
 ├── README.md
+├── LICENSE                           MIT License and bundled-font notices
 ├── install.bat                       Unified menu for five languages
 ├── install-ChineseSimplified.bat     Simplified Chinese entry point
 ├── install-ChineseTraditional.bat    Traditional Chinese entry point
@@ -110,6 +111,8 @@ Appending kana, Han characters, or other non-ASCII characters directly after run
 
 If your region's language is not yet included, you are welcome to [open an issue](https://github.com/VONWEI13/Bloodbowl2-WorldLanguages/issues) and suggest it. Include the language and region, your game version, and whether you can help test the resulting package.
 
+If you think any terminology is inaccurate or could be improved, you can also [open an issue](https://github.com/VONWEI13/Bloodbowl2-WorldLanguages/issues) or use a local AI tool such as **Kimi Code** or **Codex** to correct it, then rebuild and test the affected language database.
+
 You can also use **Kimi Code** or another AI coding tool to develop your own language Mod with this package as a reference. The following prompt provides a starting point:
 
 ```text
@@ -132,6 +135,12 @@ This Mod contains no `.exe` or `.dll` files. Its installation, language switchin
 - [`uninstall.bat`](uninstall.bat): restores the original language database and removes the Mod's loose font files.
 
 The scripts do not access the network, upload data, change system settings, or modify files outside the game directory. You can review every command before running them.
+
+## License
+
+The scripts and localization text in this repository are released under the [MIT License](LICENSE).
+
+The bundled fonts retain their original licenses and are not covered by the repository's MIT License. WenQuanYi Micro Hei is distributed under Apache License 2.0; the bundled Noto fonts are distributed under the SIL Open Font License 1.1. See [LICENSE](LICENSE) for the applicable font notices.
 
 ## Disclaimer
 
