@@ -51,6 +51,23 @@ Run [uninstall.bat](uninstall.bat). It restores the backed-up original English d
 - Use `BB2ChineseMod\uninstall.bat` for languages installed by the standalone Chinese package.
 - Keep each package's original backup; neither backup should be deleted.
 
+## Installation Issues / Other Versions: One-Prompt AI Adaptation
+
+If manual installation fails because of a different game layout, a non-Steam release, or a game update, an AI coding tool can adapt the package for you. Tools such as **Kimi Code**, WorkBuddy, ZCode, Cursor, and Claude Code can inspect the files and perform the adaptation.
+
+Copy the entire prompt below, replacing the paths and language code with your own:
+
+```text
+My Blood Bowl 2 installation is at C:\Program Files (x86)\Steam\steamapps\common\Blood Bowl 2.
+Please adapt the World Languages package at C:\Users\<username>\Downloads\Bloodbowl2-WorldLanguages-main and install the <language code> language:
+1. Inspect the actual game layout before changing anything. If the expected paths differ, locate the corresponding files first.
+2. Back up Data\DBToolDB\Localization\Default_loc_English.db to the package's backup\ directory. Never overwrite an existing original backup.
+3. Copy the selected language's files\Data\ content into the corresponding game Data\ directory. Supported codes are zhhans, zhhant, ja, ptbr, and tr.
+4. For zhhans, zhhant, or ja, deploy that language's ChineseFont.ttf as the nine font files listed in install.bat under both Data\Gui\Fonts\ and Data\Gui\Fonts\english\. For ptbr or tr, do not install a custom font.
+5. Do not modify any CPK archive. Preserve the loose-file override approach and explain any additional changes before making them.
+6. Verify that the deployed database, fonts.xml when required, and fonts match the selected language's source files. Show me how to restore the original files.
+```
+
 ## Fonts
 
 | Language directory | Deployed font | Notes |
@@ -89,9 +106,35 @@ BB2WorldLang/
 
 Appending kana, Han characters, or other non-ASCII characters directly after runtime references such as `$ACTION_*` can make the game display the raw key instead of resolving it. See [KNOWN_ISSUES.md](docs/KNOWN_ISSUES.md) for the translation and proofreading rules and the history of previous fixes.
 
-## Security and Disclaimer
+## Requesting or Developing Another Language
 
-- This Mod contains no `.exe` or `.dll` files. Installation, language switching, and removal use public Windows batch scripts; they do not access the network, download files, or change system settings.
+If your region's language is not yet included, you are welcome to [open an issue](https://github.com/VONWEI13/Bloodbowl2-WorldLanguages/issues) and suggest it. Include the language and region, your game version, and whether you can help test the resulting package.
+
+You can also use **Kimi Code** or another AI coding tool to develop your own language Mod with this package as a reference. The following prompt provides a starting point:
+
+```text
+Please develop a new <language> (<region>) localization Mod for Blood Bowl 2 using this World Languages repository as a reference:
+1. Read README.md, install.bat, and docs\KNOWN_ISSUES.md, then inspect the existing language directories and deployment layout.
+2. Start from the original English Default_loc_English.db. Preserve all keys and the DSMGR database structure. Translate the display text without changing game logic.
+3. Preserve every $XXX runtime reference and follow the boundary rules in docs\KNOWN_ISSUES.md. In particular, leave a space after each reference unless it ends the string.
+4. Create a separate language directory containing files\Data\DBToolDB\Localization\Default_loc_English.db. Do not overwrite any existing language or original backup.
+5. If the language needs additional glyphs, use an openly licensed font that covers them and prepare an appropriate fonts.xml by following the existing CJK language resources.
+6. Extend install.bat with the new language code and menu option, add a standalone installer, and update the supported-language table in README.md.
+7. Test installation, switching to and from other languages, font cleanup, and uninstallation in a disposable copy of the game directory. Verify deployed files against their sources and report any untranslated or untested content.
+```
+
+## Security and Transparency
+
+This Mod contains no `.exe` or `.dll` files. Its installation, language switching, and removal logic is implemented entirely in public Windows batch scripts:
+
+- [`install.bat`](install.bat): checks source files, preserves the original backup, deploys the selected language, and verifies copied files.
+- The five standalone installers listed in the language table only pass their language code to `install.bat`.
+- [`uninstall.bat`](uninstall.bat): restores the original language database and removes the Mod's loose font files.
+
+The scripts do not access the network, upload data, change system settings, or modify files outside the game directory. You can review every command before running them.
+
+## Disclaimer
+
 - Audio does not change with the display language. Voices remain in the language supplied by the game.
 - This Mod replaces local display text and required fonts only. It does not modify game logic or server data. Behavior on official servers cannot be guaranteed; use offline if this is a concern.
 - Blood Bowl 2 © Cyanide Studio / Focus Home Interactive. This unofficial Mod is provided for learning, personal use, and interoperability.
