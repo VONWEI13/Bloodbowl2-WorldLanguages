@@ -26,6 +26,12 @@ PAT = re.compile(r'(\$[A-Z][A-Z_0-9]+)([^\x00-\x7f])')  # Non-ASCII character di
 # item[field] = PAT.sub(r'\1 \2', item[field])
 ```
 
+## Missing 2D Probability Keys Above 12+
+
+The original `Default_loc_toc.db` defines keys only through `GUI_PROBA_2D_12PLUS`. Skills such as Shadowing can request `GUI_PROBA_2D_13PLUS` or `GUI_PROBA_2D_14PLUS` after applying the Movement Allowance difference, causing the game to display the raw key.
+
+The Simplified Chinese resources add both keys to `Tooltips.translationtable` and append correspondingly formatted `13+` and `14+` text to the language database. Do not rename the existing 12+ key. The TOC and language database must be updated together so their record counts remain aligned. Selecting another language in the World Languages package restores the original TOC.
+
 ## History
 
 - 2026-11-08: First found in Japanese (162 occurrences) and Traditional Chinese (101 occurrences). All occurrences were fixed and committed in `043783d`.

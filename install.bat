@@ -60,25 +60,44 @@ title Blood Bowl 2 - %LANGNAME% Localization Installer
 set "GAMEDIR=%~dp0..\"
 set "LANGDIR=%~dp0%LANGCODE%\"
 set "SOURCE_DB=%LANGDIR%files\Data\DBToolDB\Localization\Default_loc_English.db"
+set "SOURCE_TOC=%LANGDIR%files\Data\DBToolDB\Localization\Default_loc_toc.db"
 set "FONT=%LANGDIR%ChineseFont.ttf"
 
 if not exist "%GAMEDIR%BloodBowl2.exe" goto :NOGAME
 if not exist "%SOURCE_DB%" goto :NOSOURCE
 if not exist "%GAMEDIR%Data\DBToolDB\Localization\Default_loc_English.db" goto :NOENGLISH
+if not exist "%GAMEDIR%Data\DBToolDB\Localization\Default_loc_toc.db" goto :NOENGLISH
+if /i "%LANGCODE%"=="zhhans" if not exist "%SOURCE_TOC%" goto :NOSOURCE
 if not defined NEEDFONT goto :SOURCESOK
 if not exist "%FONT%" goto :FONTMISSING
 if not exist "%LANGDIR%files\Data\Gui\Fonts\fonts.xml" goto :XMLMISSING
 
 :SOURCESOK
-if exist "%~dp0backup\Default_loc_English.db" goto :HAVEBACKUP
+if exist "%~dp0backup\Default_loc_English.db" goto :HAVEENGLISHBACKUP
 mkdir "%~dp0backup" 2>nul
 copy /y "%GAMEDIR%Data\DBToolDB\Localization\Default_loc_English.db" "%~dp0backup\" >nul 2>&1
 if errorlevel 1 goto :BACKUPFAIL
 echo [1/3] Original English language file backed up to backup\
-goto :DEPLOY
+goto :TOCBACKUP
 
-:HAVEBACKUP
-echo [1/3] Existing backup found, skipping backup
+:HAVEENGLISHBACKUP
+echo [1/3] Existing English backup found, skipping language backup
+
+:TOCBACKUP
+if exist "%~dp0backup\Default_loc_toc.db" goto :HAVETOCBACKUP
+mkdir "%~dp0backup" 2>nul
+copy /y "%GAMEDIR%Data\DBToolDB\Localization\Default_loc_toc.db" "%~dp0backup\" >nul 2>&1
+if errorlevel 1 goto :BACKUPFAIL
+echo [1/3] Original localization index backed up to backup\
+goto :PREPAREINDEX
+
+:HAVETOCBACKUP
+echo [1/3] Existing localization index backup found, skipping index backup
+
+:PREPAREINDEX
+if /i "%LANGCODE%"=="zhhans" goto :DEPLOY
+copy /y "%~dp0backup\Default_loc_toc.db" "%GAMEDIR%Data\DBToolDB\Localization\Default_loc_toc.db" >nul
+if errorlevel 1 goto :COPYFAIL
 
 :DEPLOY
 if not exist "%GAMEDIR%Data\Gui\Fonts\fonts.xml" goto :CLEANFONTS
@@ -107,6 +126,11 @@ xcopy /y /e /i "%LANGDIR%files\Data\*" "%GAMEDIR%Data\" >nul
 if errorlevel 1 goto :COPYFAIL
 fc /b "%SOURCE_DB%" "%GAMEDIR%Data\DBToolDB\Localization\Default_loc_English.db" >nul
 if errorlevel 1 goto :VERIFYFAIL
+if /i not "%LANGCODE%"=="zhhans" goto :TOCVERIFIED
+fc /b "%SOURCE_TOC%" "%GAMEDIR%Data\DBToolDB\Localization\Default_loc_toc.db" >nul
+if errorlevel 1 goto :VERIFYFAIL
+
+:TOCVERIFIED
 echo [2/3] %LANGNAME% language files deployed
 
 if not defined NEEDFONT goto :NOFONT

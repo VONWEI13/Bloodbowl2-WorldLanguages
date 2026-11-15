@@ -10,6 +10,16 @@ copy /y "%~dp0backup\Default_loc_English.db" "%GAMEDIR%Data\DBToolDB\Localizatio
 if errorlevel 1 goto :RESTOREFAIL
 echo [OK] Original English language file restored
 
+if not exist "%~dp0backup\Default_loc_toc.db" goto :NOTOCBACKUP
+copy /y "%~dp0backup\Default_loc_toc.db" "%GAMEDIR%Data\DBToolDB\Localization\Default_loc_toc.db" >nul
+if errorlevel 1 goto :RESTOREFAIL
+echo [OK] Original localization index restored
+goto :CLEANUP
+
+:NOTOCBACKUP
+echo [WARN] No localization index backup found; skipping index restore
+
+:CLEANUP
 for %%F in (
   "Gui\Fonts\fonts.xml"
   "Gui\Fonts\FontBB2_TRUMP_TOWN_PRO.TTF"

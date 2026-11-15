@@ -15,9 +15,12 @@ This package is a superset of the [standalone Simplified Chinese localization](h
 
 ## Compatibility
 
-Built for the file layout of **Steam version v3.0.219.2**. Other versions may work but have not been individually verified. Before installing, confirm that this file exists:
+Built for the file layout of **Steam version v3.0.219.2**. Other versions may work but have not been individually verified. Before installing, confirm that these files exist:
 
-`Data\DBToolDB\Localization\Default_loc_English.db`
+```text
+Data\DBToolDB\Localization\Default_loc_English.db
+Data\DBToolDB\Localization\Default_loc_toc.db
+```
 
 ## Installation
 
@@ -31,7 +34,7 @@ The installer accepts the language codes `zhhans`, `zhhant`, `ja`, `ptbr`, and `
 install.bat zhhans
 ```
 
-The installer checks the source files, preserves an existing original backup, deploys the selected language database, and installs the required fonts.
+The installer checks the source files, preserves existing original backups, deploys the selected language database, and installs the required fonts.
 
 ## Switching Languages
 
@@ -39,17 +42,18 @@ Only one language is active at a time. Run the target language's installer to sw
 
 - Simplified Chinese, Traditional Chinese, and Japanese each use their own bundled CJK font.
 - Brazilian Portuguese and Turkish do not install custom fonts. Switching to either language removes CJK fonts left by the previous language.
-- An existing `backup\Default_loc_English.db` is never overwritten.
+- Simplified Chinese deploys a supplemental TOC with the 2D 13+ and 14+ probability keys. Selecting another language restores the original TOC.
+- Existing `backup\Default_loc_English.db` and `backup\Default_loc_toc.db` files are never overwritten.
 
 > If another localization Mod has already changed the game and this package does not yet have an original backup, restore English with the other Mod's uninstaller before the first installation. This prevents translated text from being saved as the original backup.
 
 ## Uninstallation / Restoring English
 
-Run [uninstall.bat](uninstall.bat). It restores the backed-up original English database and removes the fonts and `fonts.xml` deployed by this Mod. The backup is retained for future installations.
+Run [uninstall.bat](uninstall.bat). It restores the backed-up original English database and localization index, and removes the fonts and `fonts.xml` deployed by this Mod. The backups are retained for future installations.
 
 - Use this package's `uninstall.bat` for languages installed by World Languages.
 - Use `BB2ChineseMod\uninstall.bat` for languages installed by the standalone Chinese package.
-- Keep each package's original backup; neither backup should be deleted.
+- Keep each package's original backups; neither backup should be deleted.
 
 ## Installation Issues / Other Versions: One-Prompt AI Adaptation
 
@@ -61,7 +65,7 @@ Copy the entire prompt below, replacing the paths and language code with your ow
 My Blood Bowl 2 installation is at C:\Program Files (x86)\Steam\steamapps\common\Blood Bowl 2.
 Please adapt the World Languages package at C:\Users\<username>\Downloads\Bloodbowl2-WorldLanguages-main and install the <language code> language:
 1. Inspect the actual game layout before changing anything. If the expected paths differ, locate the corresponding files first.
-2. Back up Data\DBToolDB\Localization\Default_loc_English.db to the package's backup\ directory. Never overwrite an existing original backup.
+2. Back up Data\DBToolDB\Localization\Default_loc_English.db and Default_loc_toc.db to the package's backup\ directory. Never overwrite existing original backups.
 3. Copy the selected language's files\Data\ content into the corresponding game Data\ directory. Supported codes are zhhans, zhhant, ja, ptbr, and tr.
 4. For zhhans, zhhant, or ja, deploy that language's ChineseFont.ttf as the nine font files listed in install.bat under both Data\Gui\Fonts\ and Data\Gui\Fonts\english\. For ptbr or tr, do not install a custom font.
 5. Do not modify any CPK archive. Preserve the loose-file override approach and explain any additional changes before making them.
